@@ -18,44 +18,40 @@ import java.util.Set;
 
 @Entity
 @Table(name = "questoes")
-public class Questao {
+public class Questoes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    @Column(nullable = true)
-    private String enunciadoString;
+    @Column
+    private String enunciado;
 
-    public Long getId() {
+    @OneToMany(mappedBy = "questoes")
+    private Set<Alternativas> alternativas = new HashSet<>();
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     public String getEnunciado() {
-        return enunciadoString;
+        return enunciado;
     }
 
     public void setEnunciado(String enunciado) {
-        this.enunciadoString = enunciado;
+        this.enunciado = enunciado;
     }
 
-    public Alternativa getAlternativa() {
-        return alternativa;
+    public Set<Alternativas> getAlternativas() {
+        return alternativas;
     }
 
-    public void setAlternativa(Alternativa categoria) {
-        this.categoria = categoria;
+    public void getAlternativas(Set<Alternativas> alternativas) {
+        this.alternativas = alternativas;
     }
 
-    public Set<Plataforma> getPlataformas() {
-        return plataformas;
-    }
-
-    public void setPlataformas(Set<Plataforma> plataformas) {
-        this.plataformas = plataformas;
-    }
 }

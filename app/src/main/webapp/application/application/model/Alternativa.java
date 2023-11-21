@@ -1,43 +1,63 @@
 package application.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-
-import java.util.HashSet;
 import java.util.Set;
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
 
 @Entity
 @Table(name = "alternativas")
-public class Alternativa {
-
+public class Alternativas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(unique = true, nullable = false)
-    private String nome;
+    private long id;
 
-    @OneToMany(mappedBy = "alternativa")
-    private Set<Questao> questoes = new HashSet<>();
+    @Column
+    private String texto;
 
-    public Long getId() {
+    @Column
+    private Boolean isCorreta;
+
+    @ManyToOne
+    @JoinColumn(name = "id_questao")
+    private Questoes questoes;
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Set<Questao> getQuestoes() {
+    public String getTexto() {
+        return texto;
+    }
+
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+
+    public Boolean getCorreta() {
+        return isCorreta;
+    }
+
+    public void setCorreta(Boolean correta) {
+        isCorreta = correta;
+    }
+
+    public Questoes getQuestao() {
         return questoes;
     }
 
-    public void setQuestoes(Set<QUestao> questoes) {
+    public void setQuestao(Questoes questoes) {
         this.questoes = questoes;
     }
+
+
 }
