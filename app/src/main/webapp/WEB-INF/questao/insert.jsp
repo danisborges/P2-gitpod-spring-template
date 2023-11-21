@@ -29,15 +29,6 @@
                     </c:forEach>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="plataforma">Plataforma(s):</label>
-                <c:forEach var="p" items="${plataformas}">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="${p.id}" name="plataformas" value="${p.id}">
-                        <label class="custom-control-label" for="${p.id}">${p.nome}</label>
-                    </div>
-                </c:forEach>
-            </div>
             <br>
                 <a href="/questao/list" class="btn btn-primary">Voltar</a>
                 <button type="submit" class="btn btn-primary">Salvar</button>

@@ -14,7 +14,6 @@ import application.model.Questao;
 import application.model.Alternativa;
 import application.repository.QuestaoRepository;
 import application.repository.AlternativaRepository;
-import application.repository.PlataformaRepository;
 
 import java.util.Set;
 
@@ -24,9 +23,6 @@ public class QuestaoController {
 
     @Autowired
     private QuestaoRepository questaoRepository;
-
-    @Autowired
-    private PlataformaRepository plataformaRepository;
 
     @Autowired
     private AlternativaRepository alternativaRepository;
@@ -39,7 +35,6 @@ public class QuestaoController {
 
     @RequestMapping("/insert")
     public String insert(Model ui) {
-        ui.addAttribute("plataformas", plataformaRepository.findAll());
         ui.addAttribute("alternativas", alternativaRepository.findAll());
         return "questao/insert";
     }
@@ -47,20 +42,12 @@ public class QuestaoController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public String insert(
             @RequestParam("titulo") String titulo,
-            @RequestParam("plataformas") Long[] idsPlataformas,
             @RequestParam("alternativa") Long alternativa_id) {
 
         Questao questao = new Questao();
         questao.setTitulo(titulo);
         questao.setAlternativa(alternativaRepository.findById(alternativa_id).get());
 
-        for (long p : idsPlataformas) {
-            Optional<Plataforma> plataforma = plataformaRepository.findById(p);
-
-            if (plataforma.isPresent()) {
-                questao.getPlataformas().add(plataforma.get());
-            }
-        }
         questaoRepository.save(questao);
         return "redirect:/questao/list";
 
@@ -72,7 +59,6 @@ public class QuestaoController {
         Optional<Questao> questao = questaoRepository.findById(id);
         if (questao.isPresent()) {
             ui.addAttribute("questao", questaoRepository.findById(id).get());
-            ui.addAttribute("plataformas", plataformaRepository.findAll());
             ui.addAttribute("alternativas", alternativaRepository.findAll());
             return "questao/update";
         }
@@ -82,7 +68,6 @@ public class QuestaoController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(
             @RequestParam("id") Long id,
-            @RequestParam("plataformas") Long[] idsPlataformas,
             @RequestParam("alternativa") Long alternativa_id,
             @RequestParam("titulo") String titulo) {
 
@@ -91,16 +76,7 @@ public class QuestaoController {
         if (questao.isPresent()) {
             questao.get().setTitulo(titulo);
             questao.get().setAlternativa(alternativaRepository.findById(alternativa_id).get());
-
-            Set<Plataforma> updatePlataforma = new HashSet<>();
-
-            for (long p : idsPlataformas) {
-                Optional<Plataforma> plataforma = plataformaRepository.findById(p);
-                if (plataforma.isPresent()) {
-                    updatePlataforma.add(plataforma.get());
-                }
-            }
-            questao.get().setPlataformas(updatePlataforma);
+            
             questaoRepository.save(questao.get());
         }
 

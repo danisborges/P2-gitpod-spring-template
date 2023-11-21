@@ -20,7 +20,6 @@
             <th>ID</th>
             <th>Titulo</th>
             <th>Alternativas</th>
-            <th>Plataformas</th>
             <th>&nbsp;</th>
         </tr>
         <c:forEach items="${questoes}" var="item">
@@ -28,12 +27,6 @@
                 <td>${item.id}</td>
                 <td>${item.titulo}</td>
                 <td>${item.categoria.nome}</td>
-            <td>
-                <c:forEach items="${item.plataformas}" var="p" varStatus="s">
-                    ${s.getCount() > 1? ", " : ""}
-                    ${p.nome}
-                </c:forEach>
-            </td>
                 <td>
                     <a href="/questao/update?id=${item.id}" class="btn btn-primary">Editar</a>
                     <a href="/questao/delete?id=${item.id}" class="btn btn-danger">Excluir</a>
