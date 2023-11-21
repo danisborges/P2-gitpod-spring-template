@@ -2,6 +2,9 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.0.6'
 	id 'io.spring.dependency-management' version '1.1.0'
+	
+	// Houve um erro de MainClass, por isso tentei usar o bootJar 
+	//bootJar { mainClassName = 'app/src/main/webapp/WEB-INF/questao/delete.jsp app/src/main/webapp/WEB-INF/questao/insert.jsp app/src/main/webapp/WEB-INF/questao/list.jsp app/src/main/webapp/WEB-INF/questao/update.jsp' }
 }
 
 repositories {
